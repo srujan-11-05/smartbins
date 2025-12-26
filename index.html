@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Bins Waste Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .view-report-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            border: 2px solid white;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .view-report-btn:hover {
+            background: white;
+            color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .input-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .input-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .form-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        input[type="number"],
+        input[type="text"],
+        input[type="tel"],
+        select {
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus,
+        input[type="text"]:focus,
+        input[type="tel"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.1);
+        }
+
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+            border: 2px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            color: #667eea;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .card .value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .card .unit {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .bins-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .bins-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .bins-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+        }
+
+        .bin-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #ddd;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .bin-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .bin-item.full {
+            border-color: #e74c3c;
+            background: #fadbd8;
+        }
+
+        .bin-item.medium {
+            border-color: #f39c12;
+            background: #fdebd0;
+        }
+
+        .bin-item.low {
+            border-color: #27ae60;
+            background: #d5f4e6;
+        }
+
+        .bin-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .bin-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .bin-fill {
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 40px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-icon {
+            font-size: 3em;
+            margin-right: 20px;
+        }
+
+        .modal-header h2 {
+            color: #333;
+            margin: 0;
+        }
+
+        .modal-body {
+            color: #666;
+            line-height: 1.6;
+            margin: 20px 0;
+            font-size: 1.05em;
+        }
+
+        .sms-details {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .sms-details p {
+            margin: 8px 0;
+            font-size: 0.95em;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        .close-btn {
+            background: #f0f0f0;
+            color: #333;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .close-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .confirm-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .confirm-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .status-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .status-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .status-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .status-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .status-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .status-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .badge-danger {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        footer {
+            background: #f8f9fa;
+            color: #666;
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>♻️ Smart Bins Waste Management System</h1>
+            <p>Real-time Waste Monitoring & Collection Management</p>
+            <a href="summary_report.html" class="view-report-btn">📋 View Summary Report</a>
+        </header>
+
+        <div class="content">
+            <!-- Input Section -->
+            <div class="input-section">
+                <h2>📊 Add Waste Data</h2>
+                <div class="form-group">
+                    <div class="form-item">
+                        <label for="binId">Bin ID:</label>
+                        <input type="text" id="binId" placeholder="e.g., BIN_001" value="BIN_001">
+                    </div>
+                    <div class="form-item">
+                        <label for="wasteAmount">Total Waste (Liters):</label>
+                        <input type="number" id="wasteAmount" placeholder="e.g., 150" value="150" min="0" max="1000">
+                    </div>
+                    <div class="form-item">
+                        <label for="wasteType">Waste Type:</label>
+                        <select id="wasteType">
+                            <option value="General">General</option>
+                            <option value="Recyclable">Recyclable</option>
+                            <option value="Organic">Organic</option>
+                            <option value="Hazardous">Hazardous</option>
+                        </select>
+                    </div>
+                    <div class="form-item">
+                        <label for="collectorPhone">Collector Phone:</label>
+                        <input type="tel" id="collectorPhone" placeholder="+1234567890">
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button class="btn-primary" onclick="addWasteData()">Add Waste</button>
+                    <button class="btn-secondary" onclick="resetForm()">Reset</button>
+                </div>
+            </div>
+
+            <!-- Dashboard Cards -->
+            <div class="dashboard">
+                <div class="card">
+                    <h3>Total Waste</h3>
+                    <div class="value" id="totalWaste">0</div>
+                    <div class="unit">Liters</div>
+                </div>
+                <div class="card">
+                    <h3>Active Bins</h3>
+                    <div class="value" id="activeBins">0</div>
+                    <div class="unit">Units</div>
+                </div>
+                <div class="card">
+                    <h3>Full Bins</h3>
+                    <div class="value" id="fullBins">0</div>
+                    <div class="unit">Need Collection</div>
+                </div>
+                <div class="card">
+                    <h3>SMS Alerts</h3>
+                    <div class="value" id="smsCount">0</div>
+                    <div class="unit">Sent</div>
+                </div>
+            </div>
+
+            <!-- Bins Section -->
+            <div class="bins-section">
+                <h2>🗑️ Bin Status</h2>
+                <div class="bins-grid" id="binsGrid">
+                    <!-- Bins will be added here -->
+                </div>
+            </div>
+
+            <!-- Status Table -->
+            <div class="status-section">
+                <h2>📋 Collection Status</h2>
+                <table class="status-table">
+                    <thead>
+                        <tr>
+                            <th>Bin ID</th>
+                            <th>Waste (L)</th>
+                            <th>Type</th>
+                            <th>Fill Level</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="statusBody">
+                        <!-- Status rows will be added here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer>
+            <p>Smart Bins Waste Management System © 2025</p>
+        </footer>
+    </div>
+
+    <!-- SMS Notification Modal -->
+    <div id="smsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-icon">📱</div>
+                <div>
+                    <h2>SMS Alert Sent!</h2>
+                </div>
+            </div>
+            <div class="modal-body">
+                <p>Waste collection alert has been sent to the waste collector.</p>
+                <div class="sms-details" id="smsDetails">
+                    <!-- SMS details will be filled here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="close-btn" onclick="closeSmsModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let bins = {};
+        let smsCount = 0;
+
+        function addWasteData() {
+            const binId = document.getElementById('binId').value.trim();
+            const wasteAmount = parseFloat(document.getElementById('wasteAmount').value);
+            const wasteType = document.getElementById('wasteType').value;
+            const collectorPhone = document.getElementById('collectorPhone').value.trim();
+
+            if (!binId || isNaN(wasteAmount) || wasteAmount <= 0) {
+                alert('Please fill all required fields with valid values');
+                return;
+            }
+
+            // Create or update bin
+            if (!bins[binId]) {
+                bins[binId] = {
+                    id: binId,
+                    waste: 0,
+                    type: wasteType,
+                    phone: collectorPhone,
+                    createdAt: new Date()
+                };
+            }
+
+            bins[binId].waste = wasteAmount;
+            bins[binId].type = wasteType;
+            bins[binId].phone = collectorPhone;
+
+            // Check if waste exceeds 150L threshold
+            if (wasteAmount >= 150) {
+                sendSmsAlert(binId, wasteAmount, wasteType, collectorPhone);
+            }
+
+            updateDashboard();
+            resetForm();
+        }
+
+        function sendSmsAlert(binId, wasteAmount, wasteType, phoneNumber) {
+            smsCount++;
+
+            // Show SMS modal
+            const smsDetails = document.getElementById('smsDetails');
+            smsDetails.innerHTML = `
+                <p><strong>Bin ID:</strong> ${binId}</p>
+                <p><strong>Waste Level:</strong> ${wasteAmount} L</p>
+                <p><strong>Waste Type:</strong> ${wasteType}</p>
+                <p><strong>Recipient:</strong> ${phoneNumber || 'Not provided'}</p>
+                <p><strong>Message:</strong> "Alert! Bin ${binId} has reached ${wasteAmount}L. Please empty it soon."</p>
+                <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
+            `;
+
+            document.getElementById('smsModal').style.display = 'block';
+        }
+
+        function closeSmsModal() {
+            document.getElementById('smsModal').style.display = 'none';
+        }
+
+        function resetForm() {
+            document.getElementById('binId').value = 'BIN_001';
+            document.getElementById('wasteAmount').value = '150';
+            document.getElementById('wasteType').value = 'General';
+            document.getElementById('collectorPhone').value = '';
+        }
+
+        function updateDashboard() {
+            // Calculate totals
+            let totalWaste = 0;
+            let fullBinsCount = 0;
+
+            for (let binId in bins) {
+                totalWaste += bins[binId].waste;
+                if (bins[binId].waste >= 150) {
+                    fullBinsCount++;
+                }
+            }
+
+            // Update cards
+            document.getElementById('totalWaste').textContent = totalWaste.toFixed(0);
+            document.getElementById('activeBins').textContent = Object.keys(bins).length;
+            document.getElementById('fullBins').textContent = fullBinsCount;
+            document.getElementById('smsCount').textContent = smsCount;
+
+            // Update bins grid
+            updateBinsGrid();
+
+            // Update status table
+            updateStatusTable();
+        }
+
+        function updateBinsGrid() {
+            const binsGrid = document.getElementById('binsGrid');
+            binsGrid.innerHTML = '';
+
+            for (let binId in bins) {
+                const bin = bins[binId];
+                const fillLevel = bin.waste;
+                let statusClass = 'low';
+                let statusEmoji = '✅';
+
+                if (fillLevel >= 150) {
+                    statusClass = 'full';
+                    statusEmoji = '🔴';
+                } else if (fillLevel >= 100) {
+                    statusClass = 'medium';
+                    statusEmoji = '🟡';
+                }
+
+                const binItem = document.createElement('div');
+                binItem.className = `bin-item ${statusClass}`;
+                binItem.innerHTML = `
+                    <div class="bin-icon">${statusEmoji}</div>
+                    <div class="bin-name">${binId}</div>
+                    <div class="bin-fill">${fillLevel.toFixed(0)}L / 200L</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${Math.min(fillLevel / 200 * 100, 100)}%"></div>
+                    </div>
+                `;
+                binsGrid.appendChild(binItem);
+            }
+        }
+
+        function updateStatusTable() {
+            const statusBody = document.getElementById('statusBody');
+            statusBody.innerHTML = '';
+
+            for (let binId in bins) {
+                const bin = bins[binId];
+                const fillLevel = bin.waste;
+                let fillPercentage = (fillLevel / 200) * 100;
+                let statusBadge = '';
+                let status = '';
+
+                if (fillLevel >= 150) {
+                    statusBadge = 'badge-danger';
+                    status = 'Full - Needs Collection';
+                } else if (fillLevel >= 100) {
+                    statusBadge = 'badge-warning';
+                    status = 'Medium - Monitor';
+                } else {
+                    statusBadge = 'badge-success';
+                    status = 'Low - OK';
+                }
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${binId}</strong></td>
+                    <td>${fillLevel.toFixed(1)}</td>
+                    <td>${bin.type}</td>
+                    <td>${fillPercentage.toFixed(0)}%</td>
+                    <td><span class="badge ${statusBadge}">${status}</span></td>
+                    <td><button class="btn-primary" onclick="emptyBin('${binId}')" style="padding: 8px 15px; font-size: 0.9em;">Empty</button></td>
+                `;
+                statusBody.appendChild(row);
+            }
+        }
+
+        function emptyBin(binId) {
+            if (confirm(`Are you sure you want to empty ${binId}?`)) {
+                bins[binId].waste = 0;
+                updateDashboard();
+                alert(`${binId} has been emptied successfully!`);
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('smsModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Initialize dashboard
+        window.onload = function() {
+            updateDashboard();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,326 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Bins Simulation Report</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        header p { font-size: 1.1em; opacity: 0.9; }
+        .content { padding: 40px; }
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .card h3 { color: #667eea; margin-bottom: 10px; font-size: 0.9em; text-transform: uppercase; }
+        .card .value { 
+            font-size: 2em; 
+            font-weight: bold; 
+            color: #333;
+        }
+        .card.success { border-left-color: #27ae60; }
+        .card.warning { border-left-color: #f39c12; }
+        .card.danger { border-left-color: #e74c3c; }
+        .card.info { border-left-color: #3498db; }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover { background: #f0f0f0; }
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+        .status-operational { background: #d4edda; color: #155724; }
+        footer {
+            background: #f8f9fa;
+            color: #666;
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #ddd;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>♻️ Smart Bins Waste Management System</h1>
+            <p>Simulation Report - 2025-12-26 09:37:42</p>
+        </header>
+        
+        <div class="content">
+            <!-- Summary Cards -->
+            <div class="grid">
+                <div class="card success">
+                    <h3>Total Waste Disposed</h3>
+                    <div class="value">170.8 L</div>
+                </div>
+                <div class="card info">
+                    <h3>Total Collections</h3>
+                    <div class="value">2</div>
+                </div>
+                <div class="card warning">
+                    <h3>Routes Completed</h3>
+                    <div class="value">2</div>
+                </div>
+                <div class="card info">
+                    <h3>Efficiency Score</h3>
+                    <div class="value">10.0/100</div>
+                </div>
+            </div>
+            
+            <!-- System Overview -->
+            <div class="section">
+                <h2>📊 System Overview</h2>
+                <table>
+                    <tr>
+                        <td><strong>Total Bins:</strong></td>
+                        <td>20</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total Trucks:</strong></td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Simulation Steps:</strong></td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Average Bin Fill:</strong></td>
+                        <td>67.9%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bins Needing Collection:</strong></td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Active Routes:</strong></td>
+                        <td>0</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-- Bin Status -->
+            <div class="section">
+                <h2>🗑️ Bin Status Distribution</h2>
+                <table>
+                    <tr>
+                        <th>Status</th>
+                        <th>Count</th>
+                        <th>Percentage</th>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Operational</strong></td>
+                        <td>20</td>
+                        <td>100.0%</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Full</strong></td>
+                        <td>0</td>
+                        <td>0.0%</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Maintenance</strong></td>
+                        <td>0</td>
+                        <td>0.0%</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Offline</strong></td>
+                        <td>0</td>
+                        <td>0.0%</td>
+                    </tr>
+
+                </table>
+            </div>
+            
+            <!-- Truck Status -->
+            <div class="section">
+                <h2>🚚 Truck Status Distribution</h2>
+                <table>
+                    <tr>
+                        <th>Status</th>
+                        <th>Count</th>
+                        <th>Percentage</th>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Idle</strong></td>
+                        <td>3</td>
+                        <td>100.0%</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Collecting</strong></td>
+                        <td>0</td>
+                        <td>0.0%</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Full</strong></td>
+                        <td>0</td>
+                        <td>0.0%</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Returning</strong></td>
+                        <td>0</td>
+                        <td>0.0%</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Maintenance</strong></td>
+                        <td>0</td>
+                        <td>0.0%</td>
+                    </tr>
+
+                </table>
+            </div>
+            
+            <!-- Performance Metrics -->
+            <div class="section">
+                <h2>📈 Performance Metrics</h2>
+                <p><strong>Efficiency Score: 10.0/100</strong></p>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 10.0%;">
+                        10.0%
+                    </div>
+                </div>
+                
+                <p><strong>Average Bin Fill Level: 67.9%</strong></p>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 67.92%;">
+                        67.9%
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Fleet Statistics -->
+            <div class="section">
+                <h2>📊 Fleet Statistics</h2>
+                <table>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>Total Collections</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>Total Waste Collected</td>
+                        <td>170.83 L</td>
+                    </tr>
+                    <tr>
+                        <td>Average Collection Size</td>
+                        <td>85.41 L</td>
+                    </tr>
+                    <tr>
+                        <td>Active Bins</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>Active Trucks</td>
+                        <td>0</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-- Recommendations -->
+            <div class="section">
+                <h2>💡 Recommendations</h2>
+                <ul style="padding-left: 20px;">
+                    <li>✓ System is operating efficiently</li>
+                    <li>✓ All bins monitored and maintained</li>
+                    <li>✓ Collection routes optimized</li>
+                    <li>✓ Maintenance alerts monitored</li>
+                </ul>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Smart Bins Waste Management System - Simulation Report</p>
+            <p>Generated on 2025-12-26 at 09:37:42</p>
+        </footer>
+    </div>
+</body>
+</html>
